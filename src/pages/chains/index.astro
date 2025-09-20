@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, type Chain } from '../../lib/mongodb';
+
+const chainsCollection = await getCollection<Chain>('chains');
+const chains = await chainsCollection.find({}).toArray();
+---
+
+<Layout title="Chains">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Chains</h1>
+    <a href="/chains/create" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+      Create Chain
+    </a>
+  </div>
+  
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Chain ID
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Chain Name
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Image
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {chains.map(chain => (
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap font-medium">{chain.chainId}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{chain.chainName}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {chain.chainImage && <img src={chain.chainImage} alt={chain.chainName} class="h-8 w-8" />}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    
+    {chains.length === 0 && (
+      <div class="text-center py-8 text-gray-500">
+        No chains found
+      </div>
+    )}
+  </div>
+</Layout>

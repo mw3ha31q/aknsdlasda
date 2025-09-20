@@ -1,0 +1,27 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="bg-white shadow-sm border-b">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex space-x-8">
+        <a href="/" class="text-xl font-bold">Sablier Admin</a>
+        <div class="flex items-center space-x-4">
+          <a href="/streams" class={`hover:text-blue-600 ${currentPath.includes('/streams') ? 'text-blue-600' : ''}`}>
+            Streams
+          </a>
+          <a href="/coins" class={`hover:text-blue-600 ${currentPath.includes('/coins') ? 'text-blue-600' : ''}`}>
+            Coins
+          </a>
+          <a href="/chains" class={`hover:text-blue-600 ${currentPath.includes('/chains') ? 'text-blue-600' : ''}`}>
+            Chains
+          </a>
+        </div>
+      </div>
+      <form action="/api/logout" method="POST">
+        <button type="submit" class="text-red-600 hover:text-red-800">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>
