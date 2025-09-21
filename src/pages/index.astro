@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from '../lib/mongodb';
+
+const streams = await getCollection('streams');
+const coins = await getCollection('coins');
+const chains = await getCollection('chains');
+
+const streamCount = await streams.countDocuments();
+const coinCount = await coins.countDocuments();
+const chainCount = await chains.countDocuments();
+---
+
+<Layout title="Dashboard">
+  <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-2">Streams</h2>
+      <p class="text-3xl font-bold text-blue-600">{streamCount}</p>
+      <a href="/streams" class="text-sm text-blue-600 hover:text-blue-800 mt-2 inline-block">
+        View all →
+      </a>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-2">Coins</h2>
+      <p class="text-3xl font-bold text-green-600">{coinCount}</p>
+      <a href="/coins" class="text-sm text-green-600 hover:text-green-800 mt-2 inline-block">
+        View all →
+      </a>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-2">Chains</h2>
+      <p class="text-3xl font-bold text-purple-600">{chainCount}</p>
+      <a href="/chains" class="text-sm text-purple-600 hover:text-purple-800 mt-2 inline-block">
+        View all →
+      </a>
+    </div>
+  </div>
+</Layout>

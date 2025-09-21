@@ -5,14 +5,17 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies using basic npm install
-RUN npm install --omit=dev
+# Install all dependencies (including devDependencies for build)
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
 
 # Build the application
 RUN npm run build
+
+# Remove dev dependencies after build
+RUN npm prune --production
 
 EXPOSE 4321
 
